@@ -1,0 +1,21 @@
+{
+    "indexes": [
+      {
+        "collectionGroup": "slots",
+        "queryScope": "COLLECTION",
+        "fields": [
+          { "fieldPath": "centreId", "order": "ASCENDING" },
+          { "fieldPath": "date", "order": "ASCENDING" }
+        ]
+      },
+      {
+        "collectionGroup": "bookings",
+        "queryScope": "COLLECTION",
+        "fields": [
+          { "fieldPath": "centreId", "order": "ASCENDING" },
+          { "fieldPath": "date", "order": "ASCENDING" }
+        ]
+      }
+    ],
+    "fieldOverrides": []
+  }

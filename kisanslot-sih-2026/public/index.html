@@ -1,0 +1,2247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KisanSlot | SIH 2026 PS 26032</title>
+  <meta name="description" content="Smart Farmer Procurement Slot Booking, Real-Time Queue, Procurement and Payment Tracking Platform" />
+  <style>
+    :root {
+      --bg: #f3f6fb;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --green: #15803d;
+      --green-dark: #166534;
+      --blue: #1d4ed8;
+      --red: #b91c1c;
+      --amber: #b45309;
+      --purple: #6d28d9;
+      --cyan: #0e7490;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    header {
+      background: linear-gradient(135deg, #14532d, #15803d);
+      color: white;
+      padding: 20px 16px;
+    }
+
+    .header-inner,
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    header h1 {
+      margin: 0 0 6px;
+      font-size: 28px;
+    }
+
+    header p {
+      margin: 0;
+      opacity: 0.92;
+    }
+
+    .ps-badge {
+      background: rgba(255,255,255,0.16);
+      border: 1px solid rgba(255,255,255,0.25);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .container {
+      padding: 20px 16px 70px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .tab-btn {
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .tab-btn.active {
+      background: var(--green);
+      color: white;
+      border-color: var(--green);
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .form-grid label {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 15px;
+      background: #fff;
+    }
+
+    input:disabled {
+      background: #f9fafb;
+      color: #6b7280;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .primary-btn {
+      background: var(--green);
+      color: white;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+    }
+
+    .primary-btn:hover {
+      background: var(--green-dark);
+    }
+
+    .primary-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .secondary-btn {
+      background: #e5e7eb;
+      color: #111827;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    .danger-btn {
+      background: #fee2e2;
+      color: var(--red);
+      border: 1px solid #fecaca;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-weight: 700;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+
+    .stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .between {
+      justify-content: space-between;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #e5e7eb;
+    }
+
+    .status-booked { background: #dbeafe; color: var(--blue); }
+    .status-waiting { background: #fef3c7; color: var(--amber); }
+    .status-called { background: #ede9fe; color: var(--purple); }
+    .status-processing { background: #cffafe; color: var(--cyan); }
+    .status-completed { background: #dcfce7; color: var(--green); }
+    .status-cancelled { background: #fee2e2; color: var(--red); }
+    .status-no_show { background: #f3f4f6; color: #374151; }
+
+    .status-initiated { background: #dbeafe; color: var(--blue); }
+    .status-processing-payment { background: #fef3c7; color: var(--amber); }
+    .status-credited { background: #dcfce7; color: var(--green); }
+    .status-failed { background: #fee2e2; color: var(--red); }
+
+    .status-billed { background: #ede9fe; color: var(--purple); }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 10px;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+
+    th {
+      background: #f9fafb;
+      font-weight: 700;
+    }
+
+    .metric-card {
+      background: linear-gradient(135deg, #ffffff, #f8fafc);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .metric-card h3 {
+      margin: 0 0 8px;
+      font-size: 13px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .metric-card .value {
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    .timeline {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .step {
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: #f3f4f6;
+      font-size: 12px;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .step.done {
+      background: #dcfce7;
+      color: var(--green);
+    }
+
+    .step.current {
+      background: #dbeafe;
+      color: var(--blue);
+    }
+
+    #toast {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      background: #111827;
+      color: white;
+      padding: 12px 16px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: 0.25s ease;
+      z-index: 999;
+      max-width: 92vw;
+    }
+
+    #toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 700px) {
+      header h1 {
+        font-size: 22px;
+      }
+
+      .tab-btn {
+        padding: 9px 12px;
+        font-size: 14px;
+      }
+
+      .metric-card .value {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div>
+        <h1>KisanSlot</h1>
+        <p>Smart Farmer Procurement Slot Booking, Real-Time Queue, Procurement & Payment Tracking</p>
+      </div>
+      <div class="ps-badge">SIH 2026 • PS 26032</div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- AUTH SECTION -->
+    <section id="authSection" class="card">
+      <div class="tabs">
+        <button id="showLogin" class="tab-btn active" type="button">Login</button>
+        <button id="showRegister" class="tab-btn" type="button">Register</button>
+      </div>
+
+      <form id="loginForm" class="form-grid">
+        <h2>Login</h2>
+
+        <label>Email</label>
+        <input type="email" id="loginEmail" required />
+
+        <label>Password</label>
+        <input type="password" id="loginPassword" required />
+
+        <button type="submit" class="primary-btn">Login</button>
+
+        <p class="note">
+          Demo tip: create one farmer, one officer, and one admin account to test all dashboards.
+        </p>
+      </form>
+
+      <form id="registerForm" class="form-grid hidden">
+        <h2>Register</h2>
+
+        <label>Full Name</label>
+        <input type="text" id="regName" required />
+
+        <label>Email</label>
+        <input type="email" id="regEmail" required />
+
+        <label>Password</label>
+        <input type="password" id="regPassword" minlength="6" required />
+
+        <label>Mobile Number with Country Code</label>
+        <input type="tel" id="regMobile" placeholder="+919876543210" required />
+
+        <label>Village</label>
+        <input type="text" id="regVillage" />
+
+        <label>District</label>
+        <input type="text" id="regDistrict" />
+
+        <label>State</label>
+        <input type="text" id="regState" />
+
+        <label>Preferred Language</label>
+        <select id="regLanguage">
+          <option value="Hindi">Hindi</option>
+          <option value="English">English</option>
+          <option value="Marathi">Marathi</option>
+          <option value="Punjabi">Punjabi</option>
+          <option value="Bengali">Bengali</option>
+          <option value="Tamil">Tamil</option>
+          <option value="Telugu">Telugu</option>
+          <option value="Kannada">Kannada</option>
+          <option value="Gujarati">Gujarati</option>
+          <option value="Malayalam">Malayalam</option>
+        </select>
+
+        <label>Role</label>
+        <select id="regRole">
+          <option value="farmer">Farmer</option>
+          <option value="officer">Procurement Officer</option>
+          <option value="admin">Admin</option>
+        </select>
+
+        <label>Bank Account Last 4 Digits</label>
+        <input type="text" id="regBankLast4" maxlength="4" placeholder="4821" />
+
+        <button type="submit" class="primary-btn">Create Account</button>
+
+        <p class="note">
+          For real deployment, officer/admin accounts should be created by government officials, not self-registered.
+        </p>
+      </form>
+    </section>
+
+    <!-- APP SECTION -->
+    <section id="appSection" class="hidden">
+      <div class="topbar card">
+        <div>
+          <strong id="userInfo">User</strong>
+        </div>
+        <button id="logoutBtn" class="danger-btn" type="button">Logout</button>
+      </div>
+
+      <nav class="tabs" id="navTabs">
+        <button class="tab-btn active" data-tab="book" data-roles="farmer" type="button">Book Slot</button>
+        <button class="tab-btn" data-tab="my" data-roles="farmer" type="button">My Bookings</button>
+        <button class="tab-btn" data-tab="queue" data-roles="farmer,officer,admin" type="button">Live Queue</button>
+        <button class="tab-btn" data-tab="payments" data-roles="farmer,officer,admin" type="button">Payments</button>
+        <button class="tab-btn" data-tab="notifications" data-roles="farmer,officer,admin" type="button">
+          Notifications <span id="unreadCount" class="badge">0</span>
+        </button>
+        <button class="tab-btn" data-tab="officer" data-roles="officer,admin" type="button">Officer Dashboard</button>
+        <button class="tab-btn" data-tab="admin" data-roles="admin" type="button">Admin Analytics</button>
+        <button class="tab-btn" data-tab="profile" data-roles="farmer,officer,admin" type="button">Profile</button>
+      </nav>
+
+      <!-- BOOK SLOT -->
+      <section id="bookSection" class="tab-section">
+        <div class="card">
+          <h2>Book Procurement Slot</h2>
+          <div class="form-grid">
+            <label>Procurement Centre</label>
+            <select id="bookCentre"></select>
+
+            <label>Date</label>
+            <input type="date" id="bookDate" />
+
+            <label>Expected Quantity in Quintals</label>
+            <input type="number" id="quantity" min="0.1" step="0.1" value="10" />
+          </div>
+        </div>
+
+        <div id="slotList" class="grid"></div>
+      </section>
+
+      <!-- MY BOOKINGS -->
+      <section id="mySection" class="tab-section hidden">
+        <div class="card">
+          <h2>My Bookings</h2>
+          <p class="small">Track token, queue status, procurement status and payment status.</p>
+        </div>
+        <div id="myBookings" class="stack"></div>
+      </section>
+
+      <!-- LIVE QUEUE -->
+      <section id="queueSection" class="tab-section hidden">
+        <div class="card">
+          <h2>Live Queue Tracking</h2>
+          <div class="form-grid">
+            <label>Centre</label>
+            <select id="queueCentre"></select>
+
+            <label>Date</label>
+            <input type="date" id="queueDate" />
+          </div>
+        </div>
+        <div id="liveQueue" class="stack"></div>
+      </section>
+
+      <!-- PAYMENTS -->
+      <section id="paymentsSection" class="tab-section hidden">
+        <div class="card">
+          <h2>Payment Status Tracking</h2>
+          <p class="small">View payment initiation, processing, credit and failure status.</p>
+        </div>
+        <div id="paymentList" class="stack"></div>
+      </section>
+
+      <!-- NOTIFICATIONS -->
+      <section id="notificationsSection" class="tab-section hidden">
+        <div class="card">
+          <div class="row between">
+            <h2 style="margin:0;">Notifications</h2>
+            <button id="markNotificationsRead" class="secondary-btn" type="button">Mark All Read</button>
+          </div>
+          <p class="small">
+            These notifications simulate SMS/WhatsApp alerts. Real SMS/WhatsApp can be enabled using Firebase Cloud Functions + Twilio.
+          </p>
+        </div>
+        <div id="notificationList" class="stack"></div>
+      </section>
+
+      <!-- OFFICER DASHBOARD -->
+      <section id="officerSection" class="tab-section hidden">
+        <div class="card">
+          <h2>Officer Dashboard</h2>
+          <div class="form-grid">
+            <label>Centre</label>
+            <select id="officerCentre"></select>
+
+            <label>Date</label>
+            <input type="date" id="officerDate" />
+          </div>
+        </div>
+
+        <div id="officerQueue" class="stack"></div>
+
+        <form id="procurementForm" class="card hidden">
+          <h3 id="pfTitle">Complete Procurement</h3>
+
+          <div class="form-grid">
+            <label>Gross Weight in Quintals</label>
+            <input type="number" id="pfGross" step="0.01" min="0" />
+
+            <label>Tare Weight in Quintals</label>
+            <input type="number" id="pfTare" step="0.01" min="0" value="0" />
+
+            <label>Quality Grade</label>
+            <select id="pfQuality">
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+              <option value="Reject">Reject</option>
+            </select>
+
+            <label>Rate per Quintal</label>
+            <input type="number" id="pfRate" step="0.01" min="0" />
+
+            <label>Deduction Amount</label>
+            <input type="number" id="pfDeduction" step="0.01" min="0" value="0" />
+          </div>
+
+          <div class="row" style="margin-top:12px;">
+            <button type="submit" class="primary-btn">Save & Generate Payment</button>
+            <button type="button" class="secondary-btn" data-action="close-procurement-form">Cancel</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- ADMIN ANALYTICS -->
+      <section id="adminSection" class="tab-section hidden">
+        <div class="card">
+          <div class="row between">
+            <h2 style="margin:0;">Admin Analytics</h2>
+            <button id="refreshAnalytics" class="secondary-btn" type="button">Refresh</button>
+          </div>
+          <p class="small">Congestion, slot utilization, queue movement and pending payment overview.</p>
+        </div>
+
+        <div id="analyticsCards" class="grid"></div>
+
+        <div class="card">
+          <h3>Add Procurement Centre</h3>
+          <form id="centreForm" class="form-grid">
+            <label>Centre Name</label>
+            <input type="text" id="centreName" required />
+
+            <label>District</label>
+            <input type="text" id="centreDistrict" required />
+
+            <label>State</label>
+            <input type="text" id="centreState" required />
+
+            <label>Address</label>
+            <input type="text" id="centreAddress" />
+
+            <label>Weighing Stations</label>
+            <input type="number" id="centreStations" min="1" value="4" required />
+
+            <label>Average Service Time in Minutes</label>
+            <input type="number" id="centreAvg" min="1" value="12" required />
+
+            <label>Opening Time</label>
+            <input type="time" id="centreOpen" value="08:00" />
+
+            <label>Closing Time</label>
+            <input type="time" id="centreClose" value="18:00" />
+
+            <label class="row" style="font-weight:600;">
+              <input type="checkbox" id="centreActive" checked style="width:auto;" />
+              Active
+            </label>
+
+            <button type="submit" class="primary-btn">Add Centre</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <h3>Add Slot</h3>
+          <form id="slotForm" class="form-grid">
+            <label>Centre</label>
+            <select id="adminSlotCentre" required></select>
+
+            <label>Commodity</label>
+            <input type="text" id="slotCommodity" placeholder="Wheat / Paddy / Maize" required />
+
+            <label>Date</label>
+            <input type="date" id="slotDate" required />
+
+            <label>Start Time</label>
+            <input type="time" id="slotStart" value="09:00" required />
+
+            <label>End Time</label>
+            <input type="time" id="slotEnd" value="09:30" required />
+
+            <label>Capacity</label>
+            <input type="number" id="slotCapacity" min="1" value="20" required />
+
+            <button type="submit" class="primary-btn">Add Slot</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <h3>Slot Utilization Today</h3>
+          <div class="table-wrap">
+            <table id="utilisationTable">
+              <thead>
+                <tr>
+                  <th>Centre</th>
+                  <th>Commodity</th>
+                  <th>Time</th>
+                  <th>Capacity</th>
+                  <th>Booked</th>
+                  <th>Remaining</th>
+                  <th>Utilization</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Centres</h3>
+          <div id="centreList" class="stack"></div>
+        </div>
+
+        <div class="card">
+          <h3>Today's Slots</h3>
+          <div id="adminSlotList" class="stack"></div>
+        </div>
+      </section>
+
+      <!-- PROFILE -->
+      <section id="profileSection" class="tab-section hidden">
+        <div class="card">
+          <h2>Profile Management</h2>
+          <form id="profileForm" class="form-grid">
+            <label>Full Name</label>
+            <input type="text" id="profName" required />
+
+            <label>Mobile Number</label>
+            <input type="tel" id="profMobile" required />
+
+            <label>Village</label>
+            <input type="text" id="profVillage" />
+
+            <label>District</label>
+            <input type="text" id="profDistrict" />
+
+            <label>State</label>
+            <input type="text" id="profState" />
+
+            <label>Preferred Language</label>
+            <select id="profLanguage">
+              <option value="Hindi">Hindi</option>
+              <option value="English">English</option>
+              <option value="Marathi">Marathi</option>
+              <option value="Punjabi">Punjabi</option>
+              <option value="Bengali">Bengali</option>
+              <option value="Tamil">Tamil</option>
+              <option value="Telugu">Telugu</option>
+              <option value="Kannada">Kannada</option>
+              <option value="Gujarati">Gujarati</option>
+              <option value="Malayalam">Malayalam</option>
+            </select>
+
+            <label>Bank Account Last 4 Digits</label>
+            <input type="text" id="profBankLast4" maxlength="4" />
+
+            <label>Role</label>
+            <input type="text" id="profRole" disabled />
+
+            <button type="submit" class="primary-btn">Save Profile</button>
+          </form>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <div id="toast"></div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      signOut,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    import {
+      getFirestore,
+      collection,
+      doc,
+      getDoc,
+      getDocs,
+      setDoc,
+      addDoc,
+      updateDoc,
+      deleteDoc,
+      query,
+      where,
+      serverTimestamp,
+      onSnapshot,
+      runTransaction,
+      writeBatch
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    import {
+      getFunctions,
+      httpsCallable
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-functions.js";
+
+    // ========================================================
+    // REPLACE THIS WITH YOUR FIREBASE WEB APP CONFIG
+    // ========================================================
+    const firebaseConfig = {
+      apiKey: "AIzaSyA7Y52X24AwZtDv0A4cL3Qu1C07Bq5e6qM",
+      authDomain: "sabar-sih-2026.firebaseapp.com",
+      projectId: "sabar-sih-2026",
+      storageBucket: "sabar-sih-2026.firebasestorage.app",
+      messagingSenderId: "958379987716",
+      appId: "1:958379987716:web:f8312e37438256b73ef651",
+      measurementId: "G-2HPKCHTZ9P"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    let functions = null;
+    try {
+      functions = getFunctions(app, "us-central1");
+    } catch (e) {
+      console.warn("Firebase Functions not initialized:", e);
+    }
+
+    const $ = (id) => document.getElementById(id);
+
+    const todayStr = () => {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+    };
+
+    const esc = (value) =>
+      String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+
+    const fmtINR = (n) => "₹" + Number(n || 0).toLocaleString("en-IN");
+
+    const tsMs = (t) => {
+      if (!t) return 0;
+      if (typeof t.toMillis === "function") return t.toMillis();
+      if (t.seconds) return t.seconds * 1000;
+      return 0;
+    };
+
+    const fmtDateTime = (t) => {
+      const ms = tsMs(t);
+      return ms ? new Date(ms).toLocaleString() : "-";
+    };
+
+    const statusLabel = (s) => String(s || "-").replaceAll("_", " ");
+
+    let currentUser = null;
+    let profile = null;
+
+    const unsub = {};
+    const centres = {};
+    const procurementsByBooking = {};
+    const paymentsById = {};
+    const paymentsByProcurement = {};
+
+    let lastMyBookings = [];
+    let notificationsCache = [];
+    let selectedBookingForProcurement = null;
+    let toastTimer = null;
+
+    init();
+
+    function init() {
+      $("showLogin").addEventListener("click", () => toggleAuth("login"));
+      $("showRegister").addEventListener("click", () => toggleAuth("register"));
+
+      $("loginForm").addEventListener("submit", login);
+      $("registerForm").addEventListener("submit", register);
+      $("logoutBtn").addEventListener("click", logout);
+
+      document.querySelectorAll(".tab-btn[data-tab]").forEach((btn) => {
+        btn.addEventListener("click", () => switchTab(btn.dataset.tab));
+      });
+
+      document.addEventListener("click", handleActionClick);
+
+      $("bookCentre").addEventListener("change", loadSlots);
+      $("bookDate").addEventListener("change", loadSlots);
+
+      $("queueCentre").addEventListener("change", subscribeQueue);
+      $("queueDate").addEventListener("change", subscribeQueue);
+
+      $("officerCentre").addEventListener("change", subscribeOfficerQueue);
+      $("officerDate").addEventListener("change", subscribeOfficerQueue);
+
+      $("procurementForm").addEventListener("submit", saveProcurement);
+      $("profileForm").addEventListener("submit", saveProfile);
+      $("centreForm").addEventListener("submit", addCentre);
+      $("slotForm").addEventListener("submit", addSlot);
+
+      $("refreshAnalytics").addEventListener("click", loadAnalytics);
+      $("markNotificationsRead").addEventListener("click", markNotificationsRead);
+
+      $("bookDate").value = todayStr();
+      $("queueDate").value = todayStr();
+      $("officerDate").value = todayStr();
+      $("slotDate").value = todayStr();
+
+      onAuthStateChanged(auth, handleAuthState);
+    }
+
+    function toggleAuth(mode) {
+      const isLogin = mode === "login";
+      $("loginForm").classList.toggle("hidden", !isLogin);
+      $("registerForm").classList.toggle("hidden", isLogin);
+      $("showLogin").classList.toggle("active", isLogin);
+      $("showRegister").classList.toggle("active", !isLogin);
+    }
+
+    async function handleAuthState(user) {
+      detachAll();
+
+      if (!user) {
+        showAuthState();
+        return;
+      }
+
+      currentUser = user;
+
+      const farmerSnap = await getDoc(doc(db, "farmers", user.uid));
+      if (!farmerSnap.exists()) {
+        await signOut(auth);
+        toast("Profile not found. Please register again.");
+        showAuthState();
+        return;
+      }
+
+      profile = { id: user.uid, ...farmerSnap.data() };
+      showAppState();
+
+      await loadCentres();
+
+      subscribeMyBookings();
+      subscribeProcurements();
+      subscribePayments();
+      subscribeNotifications();
+
+      fillProfileForm();
+
+      const defaultTab =
+        profile.role === "farmer" ? "book" :
+        profile.role === "officer" ? "officer" :
+        "admin";
+
+      switchTab(defaultTab);
+    }
+
+    function showAuthState() {
+      detachAll();
+      currentUser = null;
+      profile = null;
+      lastMyBookings = [];
+      notificationsCache = [];
+
+      $("authSection").classList.remove("hidden");
+      $("appSection").classList.add("hidden");
+    }
+
+    function showAppState() {
+      $("authSection").classList.add("hidden");
+      $("appSection").classList.remove("hidden");
+
+      $("userInfo").textContent = `${profile.name} • ${profile.role}`;
+
+      document.querySelectorAll(".tab-btn[data-tab]").forEach((btn) => {
+        const roles = (btn.dataset.roles || "farmer,officer,admin").split(",");
+        btn.style.display = roles.includes(profile.role) ? "" : "none";
+      });
+    }
+
+    function detachAll() {
+      Object.keys(unsub).forEach((key) => {
+        if (typeof unsub[key] === "function") {
+          unsub[key]();
+        }
+      });
+    }
+
+    function switchTab(tab) {
+      document.querySelectorAll(".tab-section").forEach((sec) => sec.classList.add("hidden"));
+
+      const section = $(tab + "Section");
+      if (section) section.classList.remove("hidden");
+
+      document.querySelectorAll(".tab-btn[data-tab]").forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.tab === tab);
+      });
+
+      if (tab !== "queue" && unsub.queue) {
+        unsub.queue();
+        delete unsub.queue;
+      }
+
+      if (tab !== "officer" && unsub.officer) {
+        unsub.officer();
+        delete unsub.officer;
+      }
+
+      if (tab === "queue") subscribeQueue();
+      if (tab === "officer") subscribeOfficerQueue();
+      if (tab === "admin") loadAnalytics();
+    }
+
+    async function register(e) {
+      e.preventDefault();
+
+      const name = $("regName").value.trim();
+      const email = $("regEmail").value.trim();
+      const password = $("regPassword").value;
+      const mobile = $("regMobile").value.trim();
+      const village = $("regVillage").value.trim();
+      const district = $("regDistrict").value.trim();
+      const state = $("regState").value.trim();
+      const language = $("regLanguage").value;
+      const role = $("regRole").value;
+      const bankLast4 = $("regBankLast4").value.trim();
+
+      try {
+        const cred = await createUserWithEmailAndPassword(auth, email, password);
+
+        await setDoc(doc(db, "farmers", cred.user.uid), {
+          name,
+          email,
+          mobile,
+          village,
+          district,
+          state,
+          language,
+          role,
+          bankLast4,
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp()
+        });
+
+        toast("Registration successful");
+      } catch (err) {
+        toast(err.message);
+      }
+    }
+
+    async function login(e) {
+      e.preventDefault();
+
+      const email = $("loginEmail").value.trim();
+      const password = $("loginPassword").value;
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        toast("Login successful");
+      } catch (err) {
+        toast(err.message);
+      }
+    }
+
+    async function logout() {
+      await signOut(auth);
+      toast("Logged out");
+    }
+
+    async function loadCentres() {
+      const snap = await getDocs(collection(db, "centres"));
+      Object.keys(centres).forEach((k) => delete centres[k]);
+
+      const options = [];
+
+      snap.forEach((d) => {
+        const c = { id: d.id, ...d.data() };
+        centres[c.id] = c;
+        options.push(`<option value="${c.id}">${esc(c.name)} — ${esc(c.district || "")}</option>`);
+      });
+
+      const html = options.length ? options.join("") : `<option value="">No centres found</option>`;
+
+      ["bookCentre", "queueCentre", "officerCentre", "adminSlotCentre"].forEach((id) => {
+        const el = $(id);
+        if (el) el.innerHTML = html;
+      });
+
+      renderAdminCentres();
+
+      if ($("bookCentre").value) {
+        await loadSlots();
+      }
+    }
+
+    async function loadSlots() {
+      const centreId = $("bookCentre").value;
+      const date = $("bookDate").value;
+
+      if (!centreId || !date) return;
+
+      const q = query(
+        collection(db, "slots"),
+        where("centreId", "==", centreId),
+        where("date", "==", date)
+      );
+
+      const snap = await getDocs(q);
+      const container = $("slotList");
+      container.innerHTML = "";
+
+      if (snap.empty) {
+        container.innerHTML = `<div class="card">No slots published for this centre/date.</div>`;
+        return;
+      }
+
+      const slots = [];
+      snap.forEach((d) => slots.push({ id: d.id, ...d.data() }));
+
+      slots.sort((a, b) => String(a.startTime || "").localeCompare(String(b.startTime || "")));
+
+      slots.forEach((s) => {
+        const booked = Number(s.booked || 0);
+        const capacity = Number(s.capacity || 0);
+        const remaining = Math.max(0, capacity - booked);
+        const utilization = capacity ? Math.round((booked / capacity) * 100) : 0;
+
+        const button = remaining > 0
+          ? `<button type="button" class="primary-btn" data-action="book-slot" data-id="${s.id}">Book Slot</button>`
+          : `<button type="button" class="primary-btn" disabled>Full</button>`;
+
+        container.insertAdjacentHTML(
+          "beforeend",
+          `
+          <div class="card">
+            <div class="row between">
+              <h3 style="margin:0;">${esc(s.commodity || "Commodity")}</h3>
+              <span class="badge">${remaining} left</span>
+            </div>
+            <p class="small">${esc(s.startTime || "")} to ${esc(s.endTime || "")}</p>
+            <p><strong>Capacity:</strong> ${capacity}</p>
+            <p><strong>Booked:</strong> ${booked}</p>
+            <p><strong>Utilization:</strong> ${utilization}%</p>
+            ${button}
+          </div>
+          `
+        );
+      });
+    }
+
+    async function bookSlot(slotId) {
+      if (!currentUser || !profile) return;
+
+      const quantity = Number($("quantity").value || 0);
+      if (!quantity || quantity <= 0) {
+        toast("Enter valid expected quantity");
+        return;
+      }
+
+      try {
+        const result = await runTransaction(async (txn) => {
+          const slotRef = doc(db, "slots", slotId);
+          const slotSnap = await txn.get(slotRef);
+
+          if (!slotSnap.exists()) {
+            throw new Error("Slot not found");
+          }
+
+          const s = slotSnap.data();
+          const booked = Number(s.booked || 0);
+          const capacity = Number(s.capacity || 0);
+
+          if (booked >= capacity) {
+            throw new Error("Slot is full");
+          }
+
+          txn.update(slotRef, {
+            booked: booked + 1,
+            updatedAt: serverTimestamp()
+          });
+
+          const centre = centres[s.centreId] || {};
+          const bookingRef = doc(collection(db, "bookings"));
+          const tokenNumber = makeToken(s.commodity, s.date);
+
+          txn.set(bookingRef, {
+            farmerId: currentUser.uid,
+            farmerName: profile.name,
+            centreId: s.centreId,
+            centreName: centre.name || s.centreName || "",
+            slotId,
+            commodity: s.commodity,
+            date: s.date,
+            startTime: s.startTime,
+            endTime: s.endTime,
+            tokenNumber,
+            quantity,
+            status: "booked",
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp()
+          });
+
+          return {
+            token: tokenNumber,
+            commodity: s.commodity,
+            date: s.date,
+            startTime: s.startTime,
+            centreName: centre.name || s.centreName || "Procurement Centre"
+          };
+        });
+
+        toast(`Slot booked. Token: ${result.token}`);
+
+        await sendNotification(
+          profile.id,
+          `Dear ${profile.name}, your slot is confirmed for ${result.commodity} at ${result.centreName} on ${result.date}, ${result.startTime}. Token: ${result.token}. Please reach 15 minutes early.`,
+          "sms"
+        );
+      } catch (err) {
+        toast(err.message || "Booking failed");
+      }
+    }
+
+    async function checkIn(bookingId) {
+      await updateDoc(doc(db, "bookings", bookingId), {
+        status: "waiting",
+        checkedInAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      });
+
+      const snap = await getDoc(doc(db, "bookings", bookingId));
+      const b = snap.data();
+
+      await sendNotification(
+        b.farmerId,
+        `Token ${b.tokenNumber} checked in successfully. You are now in the live queue.`,
+        "sms"
+      );
+
+      toast("Checked in. You are now in live queue.");
+    }
+
+    async function cancelBooking(bookingId) {
+      try {
+        await runTransaction(async (txn) => {
+          const bookingRef = doc(db, "bookings", bookingId);
+          const bookingSnap = await txn.get(bookingRef);
+
+          if (!bookingSnap.exists()) throw new Error("Booking not found");
+
+          const b = bookingSnap.data();
+          if (b.status !== "booked") throw new Error("Only booked slots can be cancelled");
+
+          txn.update(bookingRef, {
+            status: "cancelled",
+            cancelledAt: serverTimestamp(),
+            updatedAt: serverTimestamp()
+          });
+
+          if (b.slotId) {
+            const slotRef = doc(db, "slots", b.slotId);
+            const slotSnap = await txn.get(slotRef);
+
+            if (slotSnap.exists()) {
+              const currentBooked = Number(slotSnap.data().booked || 0);
+              txn.update(slotRef, {
+                booked: Math.max(0, currentBooked - 1),
+                updatedAt: serverTimestamp()
+              });
+            }
+          }
+        });
+
+        toast("Booking cancelled");
+      } catch (err) {
+        toast(err.message);
+      }
+    }
+
+    function subscribeMyBookings() {
+      if (!currentUser) return;
+
+      const q = query(
+        collection(db, "bookings"),
+        where("farmerId", "==", currentUser.uid)
+      );
+
+      unsub.my = onSnapshot(q, (snap) => {
+        const arr = [];
+        snap.forEach((d) => arr.push({ id: d.id, ...d.data() }));
+
+        arr.sort((a, b) => tsMs(b.createdAt) - tsMs(a.createdAt));
+        lastMyBookings = arr;
+        renderMyBookings(arr);
+      });
+    }
+
+    function renderMyBookings(bookings) {
+      const container = $("myBookings");
+      container.innerHTML = "";
+
+      if (!bookings.length) {
+        container.innerHTML = `<div class="card">No bookings yet.</div>`;
+        return;
+      }
+
+      bookings.forEach((b) => {
+        const procurement = procurementsByBooking[b.id];
+        const payment = procurement ? paymentsByProcurement[procurement.id] : null;
+
+        const actions = [];
+        if (b.status === "booked") {
+          actions.push(`<button type="button" class="primary-btn" data-action="check-in" data-id="${b.id}">Check-in</button>`);
+          actions.push(`<button type="button" class="danger-btn" data-action="cancel-booking" data-id="${b.id}">Cancel</button>`);
+        }
+
+        const timeline = `
+          <div class="timeline">
+            <span class="step ${["booked", "waiting", "called", "processing", "completed"].includes(b.status) ? "done" : ""}">Booked</span>
+            <span class="step ${["waiting", "called", "processing", "completed"].includes(b.status) ? "done" : ""}">Checked-in</span>
+            <span class="step ${["called", "processing", "completed"].includes(b.status) ? "done" : ""}">Called</span>
+            <span class="step ${["processing", "completed"].includes(b.status) ? "done" : ""}">Processing</span>
+            <span class="step ${b.status === "completed" ? "done" : ""}">Completed</span>
+          </div>
+        `;
+
+        const procurementHtml = procurement
+          ? `
+            <p><strong>Procurement:</strong> ${esc(statusLabel(procurement.status))}</p>
+            <p><strong>Net Weight:</strong> ${procurement.netWeight} Quintals</p>
+            <p><strong>Payable Amount:</strong> ${fmtINR(procurement.payableAmount)}</p>
+            <p><strong>Bill Number:</strong> ${esc(procurement.billNumber || "-")}</p>
+          `
+          : `<p class="small">Procurement pending.</p>`;
+
+        const paymentHtml = payment
+          ? `
+            <p>
+              <strong>Payment:</strong>
+              <span class="badge ${payment.status === "processing" ? "status-processing-payment" : "status-" + payment.status}">
+                ${esc(statusLabel(payment.status))}
+              </span>
+            </p>
+            <p><strong>Reference:</strong> ${esc(payment.reference || "-")}</p>
+          `
+          : `<p class="small">Payment not generated yet.</p>`;
+
+        container.insertAdjacentHTML(
+          "beforeend",
+          `
+          <div class="card">
+            <div class="row between">
+              <h3 style="margin:0;">Token: ${esc(b.tokenNumber || "-")}</h3>
+              <span class="badge status-${esc(b.status)}">${esc(statusLabel(b.status))}</span>
+            </div>
+
+            <p><strong>Commodity:</strong> ${esc(b.commodity || "-")}</p>
+            <p><strong>Centre:</strong> ${esc(b.centreName || "-")}</p>
+            <p><strong>Date:</strong> ${esc(b.date || "-")} ${esc(b.startTime || "")}</p>
+            <p><strong>Expected Quantity:</strong> ${b.quantity || "-"} Quintals</p>
+
+            ${timeline}
+
+            <hr style="border:none;border-top:1px solid var(--border);margin:12px 0;" />
+
+            ${procurementHtml}
+            ${paymentHtml}
+
+            <div class="row" style="margin-top:10px;">
+              ${actions.join(" ")}
+            </div>
+          </div>
+          `
+        );
+      });
+    }
+
+    function subscribeProcurements() {
+      let q;
+
+      if (profile.role === "farmer") {
+        q = query(
+          collection(db, "procurements"),
+          where("farmerId", "==", currentUser.uid)
+        );
+      } else {
+        q = query(collection(db, "procurements"));
+      }
+
+      unsub.procurements = onSnapshot(q, (snap) => {
+        Object.keys(procurementsByBooking).forEach((k) => delete procurementsByBooking[k]);
+
+        snap.forEach((d) => {
+          const p = { id: d.id, ...d.data() };
+          if (p.bookingId) {
+            procurementsByBooking[p.bookingId] = p;
+          }
+        });
+
+        if (lastMyBookings.length) {
+          renderMyBookings(lastMyBookings);
+        }
+      });
+    }
+
+    function subscribePayments() {
+      let q;
+
+      if (profile.role === "farmer") {
+        q = query(
+          collection(db, "payments"),
+          where("farmerId", "==", currentUser.uid)
+        );
+      } else {
+        q = query(collection(db, "payments"));
+      }
+
+      unsub.payments = onSnapshot(q, (snap) => {
+        Object.keys(paymentsById).forEach((k) => delete paymentsById[k]);
+        Object.keys(paymentsByProcurement).forEach((k) => delete paymentsByProcurement[k]);
+
+        const arr = [];
+
+        snap.forEach((d) => {
+          const p = { id: d.id, ...d.data() };
+          paymentsById[p.id] = p;
+
+          if (p.procurementId) {
+            paymentsByProcurement[p.procurementId] = p;
+          }
+
+          arr.push(p);
+        });
+
+        arr.sort((a, b) => tsMs(b.createdAt) - tsMs(a.createdAt));
+        renderPayments(arr);
+
+        if (lastMyBookings.length) {
+          renderMyBookings(lastMyBookings);
+        }
+      });
+    }
+
+    function renderPayments(payments) {
+      const container = $("paymentList");
+      container.innerHTML = "";
+
+      if (!payments.length) {
+        container.innerHTML = `<div class="card">No payment records found.</div>`;
+        return;
+      }
+
+      payments.forEach((p) => {
+        const statusClass = p.status === "processing" ? "processing-payment" : p.status;
+
+        const staffActions =
+          ["officer", "admin"].includes(profile.role) && !["credited", "failed"].includes(p.status)
+            ? `
+              <button type="button" class="secondary-btn" data-action="mark-payment" data-id="${p.id}" data-status="processing">Mark Processing</button>
+              <button type="button" class="primary-btn" data-action="mark-payment" data-id="${p.id}" data-status="credited">Mark Credited</button>
+              <button type="button" class="danger-btn" data-action="mark-payment" data-id="${p.id}" data-status="failed">Mark Failed</button>
+            `
+            : "";
+
+        container.insertAdjacentHTML(
+          "beforeend",
+          `
+          <div class="card">
+            <div class="row between">
+              <h3 style="margin:0;">${fmtINR(p.amount)}</h3>
+              <span class="badge status-${esc(statusClass)}">${esc(statusLabel(p.status))}</span>
+            </div>
+
+            <p><strong>Farmer:</strong> ${esc(p.farmerName || p.farmerId || "-")}</p>
+            <p><strong>Reference:</strong> ${esc(p.reference || "-")}</p>
+            <p><strong>Bank Last 4:</strong> ${esc(p.bankAccountLast4 || "-")}</p>
+            <p><strong>Created:</strong> ${esc(fmtDateTime(p.createdAt))}</p>
+            ${p.creditedAt ? `<p><strong>Credited At:</strong> ${esc(fmtDateTime(p.creditedAt))}</p>` : ""}
+            ${p.failureReason ? `<p><strong>Failure Reason:</strong> ${esc(p.failureReason)}</p>` : ""}
+
+            <div class="row" style="margin-top:10px;">
+              ${staffActions}
+            </div>
+          </div>
+          `
+        );
+      });
+    }
+
+    function subscribeNotifications() {
+      const q = query(
+        collection(db, "notifications"),
+        where("farmerId", "==", currentUser.uid)
+      );
+
+      unsub.notifications = onSnapshot(q, (snap) => {
+        const arr = [];
+        snap.forEach((d) => arr.push({ id: d.id, ...d.data() }));
+
+        arr.sort((a, b) => tsMs(b.sentAt || b.createdAt) - tsMs(a.sentAt || a.createdAt));
+        notificationsCache = arr;
+
+        const unread = arr.filter((n) => !n.read).length;
+        $("unreadCount").textContent = unread;
+
+        const container = $("notificationList");
+        container.innerHTML = "";
+
+        if (!arr.length) {
+          container.innerHTML = `<div class="card">No notifications yet.</div>`;
+          return;
+        }
+
+        arr.forEach((n) => {
+          container.insertAdjacentHTML(
+            "beforeend",
+            `
+            <div class="card" style="${n.read ? "" : "border-left:5px solid var(--green);"}">
+              <div class="row between">
+                <strong>${esc(n.channel || "sms").toUpperCase()}</strong>
+                <span class="small">${esc(fmtDateTime(n.sentAt || n.createdAt))}</span>
+              </div>
+              <p style="margin:10px 0 0;">${esc(n.message)}</p>
+            </div>
+            `
+          );
+        });
+      });
+    }
+
+    async function markNotificationsRead() {
+      const unread = notificationsCache.filter((n) => !n.read);
+      if (!unread.length) {
+        toast("No unread notifications");
+        return;
+      }
+
+      const batch = writeBatch(db);
+      unread.forEach((n) => {
+        batch.update(doc(db, "notifications", n.id), { read: true });
+      });
+
+      await batch.commit();
+      toast("All notifications marked read");
+    }
+
+    function subscribeQueue() {
+      if (unsub.queue) {
+        unsub.queue();
+        delete unsub.queue;
+      }
+
+      const centreId = $("queueCentre").value;
+      const date = $("queueDate").value;
+
+      if (!centreId || !date) return;
+
+      const q = query(
+        collection(db, "bookings"),
+        where("centreId", "==", centreId),
+        where("date", "==", date)
+      );
+
+      unsub.queue = onSnapshot(q, (snap) => {
+        const arr = [];
+        snap.forEach((d) => {
+          const b = { id: d.id, ...d.data() };
+          if (["waiting", "called", "processing"].includes(b.status)) {
+            arr.push(b);
+          }
+        });
+
+        arr.sort((a, b) => tsMs(a.checkedInAt || a.createdAt) - tsMs(b.checkedInAt || b.createdAt));
+        renderQueue(arr, $("liveQueue"), false);
+      });
+    }
+
+    function subscribeOfficerQueue() {
+      if (unsub.officer) {
+        unsub.officer();
+        delete unsub.officer;
+      }
+
+      const centreId = $("officerCentre").value;
+      const date = $("officerDate").value;
+
+      if (!centreId || !date) return;
+
+      const q = query(
+        collection(db, "bookings"),
+        where("centreId", "==", centreId),
+        where("date", "==", date)
+      );
+
+      unsub.officer = onSnapshot(q, (snap) => {
+        const arr = [];
+        snap.forEach((d) => {
+          const b = { id: d.id, ...d.data() };
+          if (["waiting", "called", "processing"].includes(b.status)) {
+            arr.push(b);
+          }
+        });
+
+        arr.sort((a, b) => tsMs(a.checkedInAt || a.createdAt) - tsMs(b.checkedInAt || b.createdAt));
+        renderQueue(arr, $("officerQueue"), true);
+      });
+    }
+
+    function renderQueue(arr, container, isOfficer) {
+      container.innerHTML = "";
+
+      if (!arr.length) {
+        container.innerHTML = `<div class="card">No active farmers in queue.</div>`;
+        return;
+      }
+
+      arr.forEach((b, index) => {
+        const position = index + 1;
+        const centre = centres[b.centreId] || {};
+        const wait = estimateWait(position, centre.weighingStations, centre.avgServiceMinutes);
+
+        let actions = "";
+
+        if (isOfficer) {
+          if (b.status === "waiting") {
+            actions += `<button type="button" class="primary-btn" data-action="call-next" data-id="${b.id}">Call</button>`;
+            actions += `<button type="button" class="danger-btn" data-action="no-show" data-id="${b.id}">No-show</button>`;
+          }
+
+          if (b.status === "called") {
+            actions += `<button type="button" class="primary-btn" data-action="start-processing" data-id="${b.id}">Start Processing</button>`;
+            actions += `<button type="button" class="danger-btn" data-action="no-show" data-id="${b.id}">No-show</button>`;
+          }
+
+          if (b.status === "processing") {
+            actions += `<button type="button" class="primary-btn" data-action="complete-procurement" data-id="${b.id}">Complete Procurement</button>`;
+          }
+        }
+
+        container.insertAdjacentHTML(
+          "beforeend",
+          `
+          <div class="card">
+            <div class="row between">
+              <h3 style="margin:0;">#${position} • ${esc(b.tokenNumber || "-")}</h3>
+              <span class="badge status-${esc(b.status)}">${esc(statusLabel(b.status))}</span>
+            </div>
+
+            <p><strong>Farmer:</strong> ${esc(b.farmerName || "-")}</p>
+            <p><strong>Commodity:</strong> ${esc(b.commodity || "-")}</p>
+            <p><strong>Expected Quantity:</strong> ${b.quantity || "-"} Quintals</p>
+            <p><strong>Estimated Wait:</strong> ${wait} minutes</p>
+
+            <div class="row" style="margin-top:10px;">
+              ${actions}
+            </div>
+          </div>
+          `
+        );
+      });
+    }
+
+    async function callNext(bookingId) {
+      const snap = await getDoc(doc(db, "bookings", bookingId));
+      if (!snap.exists()) return;
+
+      const b = snap.data();
+
+      await updateDoc(doc(db, "bookings", bookingId), {
+        status: "called",
+        calledAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      });
+
+      await sendNotification(
+        b.farmerId,
+        `Token ${b.tokenNumber} has been called. Please proceed to the weighing counter.`,
+        "sms"
+      );
+
+      toast("Farmer called");
+    }
+
+    async function startProcessing(bookingId) {
+      await updateDoc(doc(db, "bookings", bookingId), {
+        status: "processing",
+        processingStartedAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      });
+
+      toast("Processing started");
+    }
+
+    async function markNoShow(bookingId) {
+      const snap = await getDoc(doc(db, "bookings", bookingId));
+      if (!snap.exists()) return;
+
+      const b = snap.data();
+
+      await updateDoc(doc(db, "bookings", bookingId), {
+        status: "no_show",
+        updatedAt: serverTimestamp()
+      });
+
+      await sendNotification(
+        b.farmerId,
+        `Your token ${b.tokenNumber} was marked no-show. Please contact procurement centre staff if this is incorrect.`,
+        "sms"
+      );
+
+      toast("Marked no-show");
+    }
+
+    async function openCompleteForm(bookingId) {
+      const snap = await getDoc(doc(db, "bookings", bookingId));
+      if (!snap.exists()) return;
+
+      const b = snap.data();
+      selectedBookingForProcurement = bookingId;
+
+      $("pfTitle").textContent = `Complete Procurement — ${b.tokenNumber || ""}`;
+      $("pfGross").value = b.quantity || "";
+      $("pfTare").value = "0";
+      $("pfQuality").value = "A";
+      $("pfRate").value = "2350";
+      $("pfDeduction").value = "0";
+
+      $("procurementForm").classList.remove("hidden");
+      $("procurementForm").scrollIntoView({ behavior: "smooth" });
+    }
+
+    async function saveProcurement(e) {
+      e.preventDefault();
+
+      if (!selectedBookingForProcurement) return;
+
+      const gross = Number($("pfGross").value || 0);
+      const tare = Number($("pfTare").value || 0);
+      const quality = $("pfQuality").value;
+      const rate = Number($("pfRate").value || 0);
+      const deduction = Number($("pfDeduction").value || 0);
+
+      if (gross <= 0 || rate <= 0) {
+        toast("Enter valid gross weight and rate");
+        return;
+      }
+
+      const net = Math.max(0, gross - tare);
+      const totalAmount = net * rate;
+      const payableAmount = Math.max(0, totalAmount - deduction);
+
+      try {
+        const bookingSnap = await getDoc(doc(db, "bookings", selectedBookingForProcurement));
+        if (!bookingSnap.exists()) throw new Error("Booking not found");
+
+        const b = bookingSnap.data();
+
+        const farmerSnap = await getDoc(doc(db, "farmers", b.farmerId));
+        const farmer = farmerSnap.exists() ? farmerSnap.data() : {};
+
+        const procurementRef = await addDoc(collection(db, "procurements"), {
+          bookingId: selectedBookingForProcurement,
+          farmerId: b.farmerId,
+          farmerName: b.farmerName,
+          centreId: b.centreId,
+          commodity: b.commodity,
+          grossWeight: gross,
+          tareWeight: tare,
+          netWeight: net,
+          qualityGrade: quality,
+          ratePerUnit: rate,
+          totalAmount,
+          deductionAmount: deduction,
+          payableAmount,
+          billNumber: `BILL-${Date.now()}`,
+          status: "billed",
+          createdBy: currentUser.uid,
+          createdAt: serverTimestamp()
+        });
+
+        await addDoc(collection(db, "payments"), {
+          procurementId: procurementRef.id,
+          farmerId: b.farmerId,
+          farmerName: b.farmerName,
+          amount: payableAmount,
+          status: "initiated",
+          reference: `PAY-${Date.now()}`,
+          bankAccountLast4: farmer.bankLast4 || "",
+          createdBy: currentUser.uid,
+          createdAt: serverTimestamp()
+        });
+
+        await updateDoc(doc(db, "bookings", selectedBookingForProcurement), {
+          status: "completed",
+          completedAt: serverTimestamp(),
+          updatedAt: serverTimestamp()
+        });
+
+        await sendNotification(
+          b.farmerId,
+          `Procurement completed. Net weight: ${net} Quintals. Payable amount: ${fmtINR(payableAmount)}. Payment has been initiated.`,
+          "sms"
+        );
+
+        $("procurementForm").classList.add("hidden");
+        selectedBookingForProcurement = null;
+
+        toast("Procurement saved and payment initiated");
+      } catch (err) {
+        toast(err.message || "Failed to save procurement");
+      }
+    }
+
+    async function markPaymentStatus(paymentId, status) {
+      const snap = await getDoc(doc(db, "payments", paymentId));
+      if (!snap.exists()) return;
+
+      const p = snap.data();
+
+      const updateData = {
+        status,
+        updatedAt: serverTimestamp(),
+        updatedBy: currentUser.uid
+      };
+
+      if (status === "credited") {
+        updateData.creditedAt = serverTimestamp();
+      }
+
+      if (status === "failed") {
+        const reason = prompt("Enter failure reason:") || "Payment failed";
+        updateData.failureReason = reason;
+      }
+
+      await updateDoc(doc(db, "payments", paymentId), updateData);
+
+      let message = "";
+      if (status === "processing") {
+        message = `Payment of ${fmtINR(p.amount)} is now processing. Reference: ${p.reference || ""}`;
+      } else if (status === "credited") {
+        message = `${fmtINR(p.amount)} has been credited to your bank account ending ${p.bankAccountLast4 || ""}. Reference: ${p.reference || ""}`;
+      } else if (status === "failed") {
+        message = `Payment of ${fmtINR(p.amount)} failed. Please contact procurement centre staff. Reference: ${p.reference || ""}`;
+      }
+
+      await sendNotification(p.farmerId, message, "sms");
+      toast(`Payment marked ${status}`);
+    }
+
+    async function addCentre(e) {
+      e.preventDefault();
+
+      try {
+        await addDoc(collection(db, "centres"), {
+          name: $("centreName").value.trim(),
+          district: $("centreDistrict").value.trim(),
+          state: $("centreState").value.trim(),
+          address: $("centreAddress").value.trim(),
+          weighingStations: Number($("centreStations").value || 1),
+          avgServiceMinutes: Number($("centreAvg").value || 10),
+          openingTime: $("centreOpen").value,
+          closingTime: $("centreClose").value,
+          active: $("centreActive").checked,
+          createdBy: currentUser.uid,
+          createdAt: serverTimestamp()
+        });
+
+        $("centreForm").reset();
+        $("centreStations").value = 4;
+        $("centreAvg").value = 12;
+        $("centreOpen").value = "08:00";
+        $("centreClose").value = "18:00";
+        $("centreActive").checked = true;
+
+        await loadCentres();
+        toast("Centre added");
+      } catch (err) {
+        toast(err.message);
+      }
+    }
+
+    async function addSlot(e) {
+      e.preventDefault();
+
+      const centreId = $("adminSlotCentre").value;
+      if (!centreId) {
+        toast("Add a centre first");
+        return;
+      }
+
+      try {
+        await addDoc(collection(db, "slots"), {
+          centreId,
+          centreName: centres[centreId]?.name || "",
+          commodity: $("slotCommodity").value.trim(),
+          date: $("slotDate").value,
+          startTime: $("slotStart").value,
+          endTime: $("slotEnd").value,
+          capacity: Number($("slotCapacity").value || 0),
+          booked: 0,
+          status: "OPEN",
+          createdBy: currentUser.uid,
+          createdAt: serverTimestamp()
+        });
+
+        $("slotForm").reset();
+        $("slotDate").value = todayStr();
+        $("slotStart").value = "09:00";
+        $("slotEnd").value = "09:30";
+        $("slotCapacity").value = 20;
+
+        await loadSlots();
+        await loadAdminSlots();
+        toast("Slot added");
+      } catch (err) {
+        toast(err.message);
+      }
+    }
+
+    function renderAdminCentres() {
+      const container = $("centreList");
+      if (!container) return;
+
+      const list = Object.values(centres);
+      container.innerHTML = "";
+
+      if (!list.length) {
+        container.innerHTML = `<div class="card">No centres added yet.</div>`;
+        return;
+      }
+
+      list.forEach((c) => {
+        container.insertAdjacentHTML(
+          "beforeend",
+          `
+          <div class="card">
+            <div class="row between">
+              <h3 style="margin:0;">${esc(c.name)}</h3>
+              <button type="button" class="danger-btn" data-action="delete-centre" data-id="${c.id}">Delete</button>
+            </div>
+            <p><strong>District:</strong> ${esc(c.district || "-")}</p>
+            <p><strong>State:</strong> ${esc(c.state || "-")}</p>
+            <p><strong>Weighing Stations:</strong> ${c.weighingStations || "-"}</p>
+            <p><strong>Avg Service Time:</strong> ${c.avgServiceMinutes || "-"} minutes</p>
+            <p><strong>Timing:</strong> ${esc(c.openingTime || "-")} to ${esc(c.closingTime || "-")}</p>
+          </div>
+          `
+        );
+      });
+    }
+
+    async function loadAdminSlots() {
+      const container = $("adminSlotList");
+      if (!container) return;
+
+      const date = todayStr();
+      const q = query(collection(db, "slots"), where("date", "==", date));
+      const snap = await getDocs(q);
+
+      container.innerHTML = "";
+
+      if (snap.empty) {
+        container.innerHTML = `<div class="card">No slots for today.</div>`;
+        return;
+      }
+
+      const arr = [];
+      snap.forEach((d) => arr.push({ id: d.id, ...d.data() }));
+
+      arr.sort((a, b) => String(a.startTime || "").localeCompare(String(b.startTime || "")));
+
+      arr.forEach((s) => {
+        const booked = Number(s.booked || 0);
+        const capacity = Number(s.capacity || 0);
+        const remaining = Math.max(0, capacity - booked);
+
+        container.insertAdjacentHTML(
+          "beforeend",
+          `
+          <div class="card">
+            <div class="row between">
+              <h3 style="margin:0;">${esc(s.centreName || centres[s.centreId]?.name || s.centreId)}</h3>
+              <button type="button" class="danger-btn" data-action="delete-slot" data-id="${s.id}">Delete</button>
+            </div>
+            <p><strong>Commodity:</strong> ${esc(s.commodity || "-")}</p>
+            <p><strong>Time:</strong> ${esc(s.startTime || "-")} to ${esc(s.endTime || "-")}</p>
+            <p><strong>Capacity:</strong> ${capacity}</p>
+            <p><strong>Booked:</strong> ${booked}</p>
+            <p><strong>Remaining:</strong> ${remaining}</p>
+          </div>
+          `
+        );
+      });
+    }
+
+    async function deleteCentre(centreId) {
+      if (!confirm("Delete this centre?")) return;
+
+      await deleteDoc(doc(db, "centres", centreId));
+      await loadCentres();
+      toast("Centre deleted");
+    }
+
+    async function deleteSlot(slotId) {
+      if (!confirm("Delete this slot?")) return;
+
+      await deleteDoc(doc(db, "slots", slotId));
+      await loadAdminSlots();
+      await loadAnalytics();
+      toast("Slot deleted");
+    }
+
+    async function loadAnalytics() {
+      const date = todayStr();
+
+      const bookingsSnap = await getDocs(
+        query(collection(db, "bookings"), where("date", "==", date))
+      );
+
+      const counts = {
+        total: 0,
+        booked: 0,
+        waiting: 0,
+        called: 0,
+        processing: 0,
+        completed: 0,
+        cancelled: 0,
+        no_show: 0
+      };
+
+      bookingsSnap.forEach((d) => {
+        const b = d.data();
+        counts.total++;
+        counts[b.status] = (counts[b.status] || 0) + 1;
+      });
+
+      const slotsSnap = await getDocs(
+        query(collection(db, "slots"), where("date", "==", date))
+      );
+
+      let totalCapacity = 0;
+      let totalBooked = 0;
+      const rows = [];
+
+      slotsSnap.forEach((d) => {
+        const s = { id: d.id, ...d.data() };
+        const capacity = Number(s.capacity || 0);
+        const booked = Number(s.booked || 0);
+        const remaining = Math.max(0, capacity - booked);
+        const utilization = capacity ? Math.round((booked / capacity) * 100) : 0;
+
+        totalCapacity += capacity;
+        totalBooked += booked;
+
+        rows.push(`
+          <tr>
+            <td>${esc(s.centreName || centres[s.centreId]?.name || s.centreId)}</td>
+            <td>${esc(s.commodity || "-")}</td>
+            <td>${esc(s.startTime || "-")}</td>
+            <td>${capacity}</td>
+            <td>${booked}</td>
+            <td>${remaining}</td>
+            <td>${utilization}%</td>
+          </tr>
+        `);
+      });
+
+      const overallUtilization = totalCapacity ? Math.round((totalBooked / totalCapacity) * 100) : 0;
+
+      let pendingPayments = 0;
+      let pendingAmount = 0;
+
+      try {
+        const paymentsSnap = await getDocs(collection(db, "payments"));
+        paymentsSnap.forEach((d) => {
+          const p = d.data();
+          if (["initiated", "processing"].includes(p.status)) {
+            pendingPayments++;
+            pendingAmount += Number(p.amount || 0);
+          }
+        });
+      } catch (err) {
+        console.warn(err);
+      }
+
+      $("analyticsCards").innerHTML = `
+        <div class="metric-card">
+          <h3>Total Bookings Today</h3>
+          <div class="value">${counts.total}</div>
+        </div>
+
+        <div class="metric-card">
+          <h3>In Queue</h3>
+          <div class="value">${counts.waiting + counts.called + counts.processing}</div>
+        </div>
+
+        <div class="metric-card">
+          <h3>Completed</h3>
+          <div class="value">${counts.completed}</div>
+        </div>
+
+        <div class="metric-card">
+          <h3>No-show</h3>
+          <div class="value">${counts.no_show}</div>
+        </div>
+
+        <div class="metric-card">
+          <h3>Slot Utilization</h3>
+          <div class="value">${overallUtilization}%</div>
+        </div>
+
+        <div class="metric-card">
+          <h3>Pending Payments</h3>
+          <div class="value">${pendingPayments}</div>
+          <p class="small" style="margin:6px 0 0;">Amount: ${fmtINR(pendingAmount)}</p>
+        </div>
+      `;
+
+      $("utilisationTable").querySelector("tbody").innerHTML =
+        rows.join("") || `<tr><td colspan="7">No slot data for today</td></tr>`;
+
+      await loadAdminSlots();
+    }
+
+    function fillProfileForm() {
+      if (!profile) return;
+
+      $("profName").value = profile.name || "";
+      $("profMobile").value = profile.mobile || "";
+      $("profVillage").value = profile.village || "";
+      $("profDistrict").value = profile.district || "";
+      $("profState").value = profile.state || "";
+      $("profLanguage").value = profile.language || "Hindi";
+      $("profBankLast4").value = profile.bankLast4 || "";
+      $("profRole").value = profile.role || "";
+    }
+
+    async function saveProfile(e) {
+      e.preventDefault();
+
+      const data = {
+        name: $("profName").value.trim(),
+        mobile: $("profMobile").value.trim(),
+        village: $("profVillage").value.trim(),
+        district: $("profDistrict").value.trim(),
+        state: $("profState").value.trim(),
+        language: $("profLanguage").value,
+        bankLast4: $("profBankLast4").value.trim(),
+        updatedAt: serverTimestamp()
+      };
+
+      await updateDoc(doc(db, "farmers", currentUser.uid), data);
+      profile = { ...profile, ...data };
+
+      $("userInfo").textContent = `${profile.name} • ${profile.role}`;
+      toast("Profile updated");
+    }
+
+    async function sendNotification(farmerId, message, channel = "sms") {
+      try {
+        await addDoc(collection(db, "notifications"), {
+          farmerId,
+          channel,
+          message,
+          status: "sent",
+          read: false,
+          sentAt: serverTimestamp(),
+          createdAt: serverTimestamp()
+        });
+      } catch (err) {
+        console.warn("Local notification save failed:", err);
+      }
+
+      // Optional real SMS/WhatsApp through Firebase Cloud Function
+      if (functions) {
+        try {
+          const call = httpsCallable(functions, "notify");
+          await call({ farmerId, message, channel });
+        } catch (err) {
+          console.warn("Cloud notification not configured:", err);
+        }
+      }
+    }
+
+    async function handleActionClick(e) {
+      const btn = e.target.closest("[data-action]");
+      if (!btn) return;
+
+      const action = btn.dataset.action;
+      const id = btn.dataset.id;
+
+      try {
+        switch (action) {
+          case "book-slot":
+            await bookSlot(id);
+            break;
+
+          case "check-in":
+            await checkIn(id);
+            break;
+
+          case "cancel-booking":
+            await cancelBooking(id);
+            break;
+
+          case "call-next":
+            await callNext(id);
+            break;
+
+          case "start-processing":
+            await startProcessing(id);
+            break;
+
+          case "no-show":
+            await markNoShow(id);
+            break;
+
+          case "complete-procurement":
+            await openCompleteForm(id);
+            break;
+
+          case "close-procurement-form":
+            $("procurementForm").classList.add("hidden");
+            selectedBookingForProcurement = null;
+            break;
+
+          case "mark-payment":
+            await markPaymentStatus(id, btn.dataset.status);
+            break;
+
+          case "delete-centre":
+            await deleteCentre(id);
+            break;
+
+          case "delete-slot":
+            await deleteSlot(id);
+            break;
+        }
+      } catch (err) {
+        toast(err.message || "Action failed");
+      }
+    }
+
+    function makeToken(commodity, date) {
+      const map = {
+        wheat: "W",
+        paddy: "P",
+        rice: "R",
+        maize: "M",
+        gram: "G",
+        soybean: "S",
+        bajra: "B",
+        jowar: "J"
+      };
+
+      const prefix = map[String(commodity || "").toLowerCase()] || "X";
+      const compactDate = String(date || todayStr()).replaceAll("-", "").slice(2);
+      const random = Math.floor(1000 + Math.random() * 9000);
+
+      return `${prefix}-${compactDate}-${random}`;
+    }
+
+    function estimateWait(position, stations = 3, avgServiceMinutes = 10) {
+      if (position <= 1) return 0;
+
+      const safeStations = Math.max(1, Number(stations) || 3);
+      const safeAvg = Math.max(1, Number(avgServiceMinutes) || 10);
+
+      return Math.ceil(((position - 1) / safeStations) * safeAvg);
+    }
+
+    function toast(message) {
+      const el = $("toast");
+      el.textContent = message;
+      el.classList.add("show");
+
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        el.classList.remove("show");
+      }, 3500);
+    }
+  </script>
+</body>
+</html>
